@@ -13,6 +13,23 @@
 
 **🌐 [English](#english) · [Español](#español)**
 
+## 🛰️ Flow / Flujo
+
+```mermaid
+flowchart LR
+    MSG["📝 MESSAGE<br/>(text / texto)"] --> TTS["🗣️ TTS<br/>piper / espeak"]
+    TTS --> PCM["PCM 8 kHz"]
+    PCM --> AMBE["🔊 AMBEserver<br/>md380-emu -s"]
+    AMBE --> CACHE[("💾 baliza.ambe")]
+    CACHE --> PEER["📡 baliza.py<br/>homebrew peer"]
+    PEER -->|"login + DMRD @ 60 ms"| MASTER["🖧 hblink3 / FreeDMR<br/>master"]
+    MASTER -->|"dynamic TG bridge"| TG(("📻 Talkgroup"))
+    TG --> RADIOS["🎙️ Radios / hotspots"]
+```
+
+> **EN** — Audio is generated once (text → TTS → AMBE) and cached; the beacon then streams it to the master as a peer, which bridges it to the talkgroup.
+> **ES** — El audio se genera una vez (texto → TTS → AMBE) y se cachea; la baliza lo emite al master como peer, que lo puentea al talkgroup.
+
 ---
 
 ## English
