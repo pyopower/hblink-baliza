@@ -1,0 +1,18 @@
+[Unit]
+Description=Baliza ciclica de voz para hblink3 (peer DMR)
+# El master hblink no es un servicio systemd en este host; la baliza reintenta
+# el login sola, asi que no ponemos dependencia dura. Si en otro host el master
+# SI es un servicio, anade aqui: After=<servicio-master>.service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/hblink-baliza
+ExecStart=/usr/bin/python3 /opt/hblink-baliza/baliza.py -c /opt/hblink-baliza/baliza.cfg
+Restart=always
+RestartSec=10
+User=root
+
+[Install]
+WantedBy=multi-user.target

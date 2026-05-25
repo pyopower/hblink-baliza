@@ -1,0 +1,119 @@
+# =====================================================================
+#  baliza.cfg  --  PLANTILLA para portar a otro servidor hblink3 / ADN
+# =====================================================================
+#  Edita SOLO lo marcado con <<< CAMBIAR.
+#  Lo demas suele valer tal cual.
+# =====================================================================
+
+[GLOBAL]
+PATH: ./
+PING_TIME: 5
+MAX_MISSED: 3
+USE_ACL: True
+REG_ACL: PERMIT:ALL
+SUB_ACL: DENY:1
+TGID_TS1_ACL: PERMIT:ALL
+TGID_TS2_ACL: PERMIT:ALL
+
+[APRS]
+ENABLED: False
+REPORT_INTERVAL: 15
+CALLSIGN: BALIZA
+SERVER: euro.aprs2.net
+MESSAGE: hblink baliza
+
+[REPORTS]
+REPORT: False
+REPORT_INTERVAL: 60
+REPORT_PORT: 4399
+REPORT_CLIENTS: 127.0.0.1
+
+[LOGGER]
+LOG_FILE: /opt/hblink-baliza/baliza.log
+LOG_HANDLERS: file-timed,console-timed
+LOG_LEVEL: INFO
+LOG_NAME: BALIZA
+
+[ALIASES]
+TRY_DOWNLOAD: False
+PATH: /opt/HBlink3/
+PEER_FILE: peer_ids.json
+SUBSCRIBER_FILE: subscriber_ids.json
+TGID_FILE: talkgroup_ids.json
+PEER_URL: https://www.radioid.net/static/rptrs.json
+SUBSCRIBER_URL: https://www.radioid.net/static/users.json
+STALE_DAYS: 7
+
+# ---- Sistema PEER que se conecta al master local ----
+[BEACON-PEER]
+MODE: PEER
+ENABLED: True
+LOOSE: False
+EXPORT_AMBE: False
+IP:
+PORT: 54055
+MASTER_IP: 127.0.0.1
+MASTER_PORT: 62031
+PASSPHRASE: passw0rd
+CALLSIGN: BALIZA
+RADIO_ID: 999999999
+RX_FREQ: 434000000
+TX_FREQ: 434000000
+TX_POWER: 25
+COLORCODE: 1
+SLOTS: 3
+LATITUDE: 00.0000
+LONGITUDE: 000.0000
+HEIGHT: 75
+LOCATION: Baliza
+DESCRIPTION: Baliza ciclica de voz
+URL: https://example.org/
+SOFTWARE_ID: hblink-baliza
+PACKAGE_ID: baliza
+GROUP_HANGTIME: 5
+OPTIONS:
+USE_ACL: True
+REG_ACL: PERMIT:ALL
+SUB_ACL: PERMIT:ALL
+TGID_TS1_ACL: PERMIT:ALL
+TGID_TS2_ACL: PERMIT:ALL
+
+# ---- Parametros propios de la baliza ----
+[BALIZA]
+ENABLED: False
+
+# --- Por servidor ---  <<< CAMBIAR
+HBLINK_PATH: /opt/HBlink3       # /opt/ADN-DMR-Peer-Server en servidores ADN
+SYSTEM: BEACON-PEER
+TG: 214                          # TG destino
+SLOT: 2                          # 1=TS1, 2=TS2 (cuidado: TS1 suele estar denegado)
+SRC_ID: 1234567                  # ID DMR que se muestra como "quien llama"
+# Tambien en [BEACON-PEER] de arriba: MASTER_IP/PORT/PASSPHRASE/RADIO_ID/PORT
+
+# --- Tiempo ---
+INTERVAL_SEC:                    # vacio = usar minutos (pon p.ej. 10 para pruebas)
+INTERVAL_MIN: 15
+FIRST_DELAY_SEC: 20
+
+# --- Audio AMBE ---
+AMBE_FILE: /opt/hblink-baliza/baliza.ambe
+# True  = (re)genera el audio aqui si cambia el mensaje (requiere TTS + AMBEserver)
+# False = usa el baliza.ambe que copies (modo portatil sin TTS local)
+AUTO_REGEN: False
+
+# --- Texto y TTS (solo si AUTO_REGEN=True) ---
+MESSAGE: Bienvenidos al TG 214. Buena radio!
+# Motor: piper (neural, requiere /opt/piper + modelo) o espeak (sintetico)
+TTS_ENGINE: espeak
+PIPER_BIN: /opt/piper/piper
+PIPER_MODEL: /opt/piper/voices/es_ES-sharvard-medium.onnx
+PIPER_SPEAKER: 1
+PIPER_LENGTH_SCALE: 1.0
+TTS_VOICE: es+f3
+TTS_SPEED: 150
+TTS_PITCH: 50
+TTS_AMPLITUDE: 150
+
+# AMBEserver para (re)generar audio aqui (solo si AUTO_REGEN=True)
+AMBE_HOST: 127.0.0.1
+AMBE_PORT: 2460

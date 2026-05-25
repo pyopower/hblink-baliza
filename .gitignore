@@ -1,0 +1,12 @@
+# Config real con credenciales / datos del servidor (usar baliza.cfg.example)
+baliza.cfg
+# Audio AMBE generado
+*.ambe
+*.ambe.sig
+# Runtime
+*.log
+*.pid
+nohup.out
+# Python
+__pycache__/
+*.pyc
